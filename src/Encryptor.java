@@ -71,12 +71,17 @@ public class Encryptor
      *  @return the encrypted message; if message is the empty string, returns the empty string
      */
     public String encryptMessage(String message) {
-        String encrypted = "";
-        int blockSize = numCols * numRows;
-        ArrayList<String> unEncryptedStr = new ArrayList<String>();
-        for(int i = 0; i < message.length();i++){
+        String secretStr = "";
+        int blockSize = numRows * numCols;
+        int i = 0;
+        while(i < message.length() - blockSize){
+            fillBlock(message.substring(i, i + blockSize));
+            secretStr += encryptBlock();
+            i+= blockSize;
         }
-        return null;
+        fillBlock(message.substring(i));
+        secretStr += encryptBlock();
+        return secretStr;
     }
 
     /**  Decrypts an encrypted message. All filler 'A's that may have been
@@ -101,8 +106,7 @@ public class Encryptor
      *        (e.g. a method to decrypt each section of the decrypted message,
      *         similar to how encryptBlock was used)
      */
-    public String decryptMessage(String encryptedMessage)
-    {
+    public String decryptMessage(String encryptedMessage){
         return null;
     }
 }
